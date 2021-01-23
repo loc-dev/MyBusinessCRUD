@@ -12,6 +12,7 @@ app = Flask(__name__)
 
 # Função ('index'), quando chamada retornará o HTML para o servidor web.
 def index() -> 'html':
-    return render_template('index.html')
+    return render_template('index.html',
+                           the_title='MyBusiness - Painel', the_heading='Painel Administrativo')
 
 app.run()
