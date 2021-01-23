@@ -1,0 +1,58 @@
+{ % extends 'index.html' %}
+
+<title>{{ the_title }}</title>
+
+{% block body %}
+
+	<main>
+
+		<h2>{{ the_heading }}</h2>
+
+		<form method='POST' action='/registrar'>
+
+			<table>
+
+				<p>Este formulário deve ser preenchido com os dados necessários para registrar a empresa.</p>
+
+				<tr>
+					<td>Razão Social:</td>
+					<td><input type='TEXT' name='razao_social' placeholder='Razão Social'></td>
+				</tr>
+
+				<tr>
+					<td>Tipo:</td>
+					<td><input type='TEXT' name='tipo' placeholder='Tipo'></td>
+				</tr>
+
+				<tr>
+					<td>CNPJ:</td>
+					<td><input type='TEXT' name='cnpj' placeholder='CNPJ'></td>
+				</tr>
+
+				<tr>
+					<td>Estado:</td>
+					<td><input type='TEXT' name='estado' placeholder='Estado'></td>
+				</tr>
+
+				<tr>
+					<td>Município:</td>
+					<td><input type='TEXT' name='municipio' placeholder='Município'></td>
+				</tr>
+
+				<tr>
+					<td>CEP:</td>
+					<td><input type='TEXT' name='cep' placeholder="CEP"></td>
+				</tr>
+
+			</table>
+
+			<p>Clique no botão abaixo, para registrar!</p>
+
+			<p><input type='SUBMIT' value='Registrar'></p>
+
+		</form>
+
+	</main>
+
+
+{% endblock %}
