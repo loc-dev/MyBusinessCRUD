@@ -1,0 +1,104 @@
+* {
+	/* Corrigindo comportamento padrão CSS */
+	box-sizing: border-box;
+}
+
+html, body {
+	margin: 0;
+}
+
+body {
+	display: flex;
+    flex-direction: column;
+	/* Cores */
+	background-color: #B6FBF5;
+}
+
+header {
+	/* Tornando o Header com elementos em Flex container */
+	display: flex;
+	height: 100px;
+	width: 100%;
+
+	/* Espaçamento */
+	padding: 15px 60px;
+
+	/* Fonte da página */
+	font-family: 'Roboto', sans-serif;
+
+	/* Cores */
+	background-color: #FFF6D1;
+}
+
+header h1 {
+	position: absolute;
+	/* Margens */
+	margin-left: 100px;
+	margin-top: 30px;
+}
+
+main {
+	/* Tornando o Header com elementos em Flex container */
+	display: flex;
+	flex-direction: column;
+}
+
+main h2 {
+	/* Alinhamentos de textos */
+	text-align: center;
+}
+
+.register {
+	/* Margens */
+	margin: 0 auto;
+	margin-top: 100px;
+
+	/* Bordas */
+	border: none;
+	border-radius: 15px;
+
+	/* Tamanho */
+	width: 20%;
+	height: 40px;
+
+	/* Cores */
+	background-color: #85FF96;
+	color: black;
+
+	/* Fonte */
+	font-weight: bold;
+
+}
+
+.view {
+	/* Margens */
+	margin: 0 auto;
+	margin-top: 50px;
+
+	/* Bordas */
+	border: none;
+	border-radius: 15px;
+
+	/* Tamanho */
+	width: 20%;
+	height: 40px;
+
+	/* Cores */
+	background-color: #F8F194;
+	color: black;
+
+	/* Fonte */
+	font-weight: bold;
+
+}
+
+footer {
+	margin-top: 300px;
+	padding: 16px;
+	border: 1px black solid;
+	border-left: none;
+	border-right: none;
+	border-bottom: none;
+	text-align: center;
+
+}

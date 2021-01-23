@@ -3,25 +3,37 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>MyBusiness - Painel</title>
+		<title>{{ the_title }}</title>
 		<meta name="description" content="Essa aplicação web é um teste desenvolvido para ser apresentado a empresa Connect Group para uma vaga de Dev Jr Web em Python">
 		<meta name="keywords" content="My Business, CRUD, Python, Flask, Jinja2">
-		<meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1.0, initial-scale=1.0">		
+		<meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1.0, initial-scale=1.0">
+		<link rel="stylesheet" href="../static/css/style.css">	
 	</head>
 
 	<body>
-		<header>
+		{% block body %}
 
-		</header>
+			<header>
 
-		<main>
+				<img class="logo" src="../static/images/buildings_icon.svg" alt="Logo do Sistema MyBusiness">
+				<h1>MyBusiness - CRUD</h1>			
+				
+			</header>
 
-		</main>
+			<main>
 
-		<footer>
+				<h2>{{ the_heading }}</h2>
 
-		</footer>
+				<button class="register">Cadastrar Empresa</button>
 
+				<button class="view">Visualizar Empresas Cadastradas</button>
+
+			</main>
+
+			<footer>
+				Copyright @ 2021 - Leonardo Oliveira de Carvalho
+			</footer>
+		{% endblock %}
 	</body>
 
 </html>
