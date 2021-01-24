@@ -44,7 +44,7 @@ main {
 }
 
 main h2 {
-	/* Alinhamentos de textos */
+	/* Textos */
 	text-align: center;
 }
 
@@ -114,13 +114,93 @@ main h2 {
 	color: black;
 }
 
+.back-index {
+	/* Margens */
+	margin: 0 auto;
+	margin-top: 20px;
+
+	/* Bordas */
+	border: none;
+	border-radius: 15px;
+
+	/* Tamanho */
+	width: 30%;
+	height: 40px;
+
+	/* Espaçamento */
+	padding: 4px 10px;
+
+	/* Cores */
+	background-color: #85FF96;
+	color: black;
+
+	/* Fonte */
+	font-size: 16px;
+	font-weight: bold;
+
+	cursor: pointer;
+}
+
+.back-index a {
+	/* Texto */
+	text-decoration: none;
+	color: black;
+}
+
+section {
+	/* Margens */
+	margin: auto;
+}
+
+section table {
+	/* Elementos em Flex container */
+	display: flex;
+	justify-content: center;
+
+	margin-right: 100px;
+}
+
+section table input {
+	/* Bordas */
+	border-radius: 4px;
+    border: 2px black solid;
+
+    /* Tamanho */
+	width: 150%;
+	height: 40px;
+
+	/* Margens */
+	margin-left: 10px;
+}
+
+section p {
+	/* Texto */
+	text-align: center;
+}
+
+section input.reg {
+	background-color: #61B0F6;
+	font-weight: bold;
+
+	/* Tamanho */
+	width: 30%;
+	height: 40px;
+}
+
+
 footer {
+	/* Margens */
 	margin-top: 300px;
+
+	/* Espaçamento */
 	padding: 16px;
+
+	/* Bordas */
 	border: 1px black solid;
 	border-left: none;
 	border-right: none;
 	border-bottom: none;
-	text-align: center;
 
+	/* Texto */
+	text-align: center;
 }

@@ -1,58 +1,72 @@
-{ % extends 'index.html' %}
-
-<title>{{ the_title }}</title>
+{% extends 'index.html' %}
 
 {% block body %}
+
+	<header>
+
+		<img class="logo" src="../static/images/buildings_icon.svg" alt="Logo do Sistema MyBusiness">
+		<h1>MyBusiness - CRUD</h1>			
+				
+	</header>
 
 	<main>
 
 		<h2>{{ the_heading }}</h2>
 
-		<form method='POST' action='/registrar'>
+		<section>
 
-			<table>
+			<form method='POST' action='/registrar'>
 
-				<p>Este formulário deve ser preenchido com os dados necessários para registrar a empresa.</p>
+				<table>
 
-				<tr>
-					<td>Razão Social:</td>
-					<td><input type='TEXT' name='razao_social' placeholder='Razão Social'></td>
-				</tr>
+					<p>Este formulário deve ser preenchido com os dados necessários para registrar a empresa.</p>
 
-				<tr>
-					<td>Tipo:</td>
-					<td><input type='TEXT' name='tipo' placeholder='Tipo'></td>
-				</tr>
+					<tr>
+						<td>Razão Social</td>
+						<td><input type='TEXT' name='razao_social' placeholder='Razão Social'></td>
+					</tr>
 
-				<tr>
-					<td>CNPJ:</td>
-					<td><input type='TEXT' name='cnpj' placeholder='CNPJ'></td>
-				</tr>
+					<tr>
+						<td>Tipo:</td>
+						<td><input type='TEXT' name='tipo' placeholder='Tipo'></td>
+					</tr>
 
-				<tr>
-					<td>Estado:</td>
-					<td><input type='TEXT' name='estado' placeholder='Estado'></td>
-				</tr>
+					<tr>
+						<td>CNPJ:</td>
+						<td><input type='TEXT' name='cnpj' placeholder='CNPJ'></td>
+					</tr>
 
-				<tr>
-					<td>Município:</td>
-					<td><input type='TEXT' name='municipio' placeholder='Município'></td>
-				</tr>
+					<tr>
+						<td>Estado:</td>
+						<td><input type='TEXT' name='estado' placeholder='Estado'></td>
+					</tr>
 
-				<tr>
-					<td>CEP:</td>
-					<td><input type='TEXT' name='cep' placeholder="CEP"></td>
-				</tr>
+					<tr>
+						<td>Município:</td>
+						<td><input type='TEXT' name='municipio' placeholder='Município'></td>
+					</tr>
 
-			</table>
+					<tr>
+						<td>CEP:</td>
+						<td><input type='TEXT' name='cep' placeholder="CEP"></td>
+					</tr>
 
-			<p>Clique no botão abaixo, para registrar!</p>
+				</table>
 
-			<p><input type='SUBMIT' value='Registrar'></p>
+				<p>Clique no botão abaixo, para registrar!</p>
 
-		</form>
+				<p><input class="reg" type='SUBMIT' value='Registrar'></p>
+
+			</form>
+
+		</section>
+
+		<button class="back-index" type="button"><a href="{{ url_for('index')}}">Voltar para o Painel</a></button>
 
 	</main>
 
+	<footer>
+		Copyright @ 2021 - Leonardo Oliveira de Carvalho
+	</footer>
 
 {% endblock %}
