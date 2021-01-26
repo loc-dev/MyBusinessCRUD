@@ -1,12 +1,9 @@
 # Importando o driver de Banco de Dados
-import mysql.connector
 
 def DBconfig():
-    conexao = mysql.connector.connect(
-        host="localhost",
-        user="admin",
-        database="mybusinessdb",
-        password="123456"
-    )
+    dbconfig = {'host': '127.0.0.1',
+                'user': 'admin',
+                'password': '123456',
+                'database': 'mybusinessDB',}
 
-    return conexao
+    return dbconfig
