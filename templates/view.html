@@ -25,6 +25,7 @@
 					<td>Estado</td>
 					<td>Município</td>
 					<td>CEP</td>
+					<td>Excluir</td>
 				</tr>
 				{% for row in empresa %}
 				<tr>
@@ -35,12 +36,15 @@
 					<td>{{ row[5] }}</td>				
 					<td>{{ row[6] }}</td>				
 					<td>{{ row[7] }}</td>
+					<td><a href="/remove/{{ row[0] }}"> Excluir </a></td>
 				</tr>
 				{% endfor %}
 
 			</table>
 
 		</section>
+
+		<button class="back-index" type="button"><a href="{{ url_for('index')}}">Voltar para o Painel</a></button>
 
 	</main>
 
