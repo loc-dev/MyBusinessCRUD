@@ -1,0 +1,51 @@
+{% extends 'index.html' %}
+
+{% block body %}
+
+	<header>
+
+		<img class="logo" src="../static/images/buildings_icon.svg" alt="Logo do Sistema MyBusiness">
+		<h1>MyBusiness - CRUD</h1>			
+				
+	</header>
+
+	<main>
+
+		<h2>{{ the_heading }}</h2>
+
+		<section>
+
+			<table>
+
+				<tr>
+					<td>Cadastrado em</td>
+					<td>Razão Social</td>
+					<td>Tipo</td>
+					<td>CNPJ</td>
+					<td>Estado</td>
+					<td>Município</td>
+					<td>CEP</td>
+				</tr>
+				{% for row in empresa %}
+				<tr>
+					<td>{{ row[1] }}</td>				
+					<td>{{ row[2] }}</td>				
+					<td>{{ row[3] }}</td>				
+					<td>{{ row[4] }}</td>				
+					<td>{{ row[5] }}</td>				
+					<td>{{ row[6] }}</td>				
+					<td>{{ row[7] }}</td>
+				</tr>
+				{% endfor %}
+
+			</table>
+
+		</section>
+
+	</main>
+
+	<footer>
+		Copyright @ 2021 - Leonardo Oliveira de Carvalho
+	</footer>
+
+{% endblock %}
