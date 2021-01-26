@@ -1,9 +1,11 @@
+#coding: UTF-8
 # Importando as seguintes funcionalidades no módulo flask
-
 from flask import Flask, render_template, request, redirect, url_for
 
-# Importando o driver de Banco de Dados
-import mysql.connector
+# Importando o módulo (db) de Banco de Dados que contém as configurações de acesso ao nosso Banco de Dados
+import db
+
+db = db.DBconfig()
 
 # Criando objeto Flask, atribuir para uma variável (app)
 app = Flask(__name__)
@@ -22,7 +24,7 @@ def index() -> 'html':
 # Decorador route, para o caminho web ('/register')
 @app.route('/register')
 
-# Função ('Registrar'), quando chamada retornará a página de formulário de cadastro para empresas
+# Função ('Register'), quando chamada retornará a página de formulário de cadastro para empresas
 def register() -> 'html':
     return render_template('register.html',
                            the_title='MyBusiness - Register',
@@ -31,20 +33,14 @@ def register() -> 'html':
 # Decorador route, para o caminho web ('/registered') somente será quando o formulário for preenchido e clicar no botão Registrar
 @app.route('/registered', methods=['GET', 'POST'])
 
-# Função ('Registrado'), temos uma condição caso o método seja POST, basicamente, registra os dados ao sistema de Banco de Dados MySQL
+# Função ('Registered'), temos uma condição caso o método seja POST, basicamente, registra os dados ao sistema de Banco de Dados MySQL
 def registered() -> 'str':
     if request.method == "POST":
-        dbconfig = { 'host': '127.0.0.1',
-                     'user': 'admin',
-                     'password': '123456',
-                     'database': 'mybusinesslogDB', }
+        cursor = db.cursor()
 
-        conn = mysql.connector.connect(**dbconfig)
-        cursor = conn.cursor()
-
-        _SQL = """insert into empresa
+        _SQL = """INSERT INTO empresa
                   (razao_social, tipo, cnpj, estado, municipio, cep)
-                  values
+                  VALUES
                   (%s, %s, %s, %s, %s, %s)"""
         cursor.execute(_SQL, (request.form['razao_social'],
                               request.form['tipo'],
@@ -52,11 +48,30 @@ def registered() -> 'str':
                               request.form['estado'],
                               request.form['municipio'],
                               request.form['cep'],))
-        conn.commit()
+        db.commit()
         cursor.close()
-        conn.close()
+        db.close()
 
     return redirect(url_for('index'))
+
+# Decorador route, para o caminho web ('/view'), é específico para visualizar todas as empresas cadastradas
+@app.route('/view', methods=['GET'])
+
+# Função ('View'), também temos uma condição, caso o método seja GET, vamos ativar nosso cursor() e dar execute() na consulta SQL que precisamos.
+def view():
+    if request.method == "GET":
+        cursor = db.cursor()
+
+        # cursor.execute("SELECT * FROM empresa WHERE tipo = 'Matriz'") --- Estou selecionando na tabela empresa somente do tipo Matriz
+        cursor.execute("SELECT * FROM empresa")
+
+        empresa = cursor.fetchall()
+
+        cursor.close()
+        db.close()
+
+        return render_template('view.html', empresa=empresa)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
