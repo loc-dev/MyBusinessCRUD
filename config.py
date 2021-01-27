@@ -71,9 +71,12 @@ def view() -> 'html':
         cursor.close()
         database.close()
 
-        return render_template('view.html', empresa=empresa)
+        return render_template('view.html',
+                               the_title='MyBusiness - View Companies',
+                               the_heading='Relação de Empresas Cadastradas',
+                               empresa=empresa)
 
-# Decorador route, para o caminho web ('remove/índice_do_id_empresa'), assim que é removido uma empresa cadastrada
+# Decorador route, para o caminho web ('/remove/índice_do_id_empresa'), assim que é para remover a empresa cadastrada
 @app.route('/remove/<int:id>')
 
 # Função ('delete'), Ao fazer a conexão com o banco de dados, vamos fazer a consulta de exclusão c/ a cláusula WHERE
@@ -82,7 +85,7 @@ def delete(id):
     cursor = database.cursor()
 
     _SQL = """DELETE FROM empresa
-          WHERE id = %s"""
+              WHERE id = %s"""
 
     cursor.execute(_SQL, (id,))
 
@@ -94,7 +97,49 @@ def delete(id):
 
     return redirect(url_for('view', empresa=empresa))
 
-#
+# Decorador route, para o caminho web ('/updated/índice_do_id_empresa'), assim que é para atualizar os dados da empresa cadastrada
+@app.route('/updated/<int:id>', methods=['GET', 'POST'])
+
+# Função ('update'), Temos duas condições, a primeira para o 'GET', onde vamos capturar todos os dados da empresa no índice qualquer, segunda condição para o 'POST', onde vamos inserir novos dados
+def update(id):
+    if request.method == 'GET':
+        database = mysql.connector.connect(**db.DBconfig())
+        cursor = database.cursor()
+
+        _SQL = """SELECT * FROM empresa WHERE id = %s"""
+
+        cursor.execute(_SQL, (id,))
+
+        empresa = cursor.fetchall()
+
+        cursor.close()
+        database.close()
+
+        return render_template('update.html',
+                               the_title='MyBusiness - Update data Companies',
+                               the_heading='Atualizar Empresa',
+                               empresa=empresa)
+
+    elif request.method == 'POST':
+        database = mysql.connector.connect(**db.DBconfig())
+        cursor = database.cursor()
+
+        _SQL = """UPDATE empresa SET razao_social = %s, tipo = %s, cnpj = %s, estado = %s, municipio = %s, cep = %s WHERE id = %s"""
+
+        cursor.execute(_SQL, (request.form.get('razao_social'),
+                              request.form.get('tipo'),
+                              request.form.get('cnpj'),
+                              request.form.get('estado'),
+                              request.form.get('municipio'),
+                              request.form.get('cep'),
+                              id,))
+
+
+        database.commit()
+        cursor.close()
+        database.close()
+
+        return redirect(url_for('view'))
 
 if __name__ == '__main__':
     app.run(debug=True)
