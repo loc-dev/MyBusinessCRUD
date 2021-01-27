@@ -15,17 +15,17 @@
 
 		<section>
 
-			<table>
+			<table id="view">
 
 				<tr>
-					<td>Cadastrado em</td>
-					<td>Razão Social</td>
-					<td>Tipo</td>
-					<td>CNPJ</td>
-					<td>Estado</td>
-					<td>Município</td>
-					<td>CEP</td>
-					<td>Excluir</td>
+					<th>Cadastrado em</th>
+					<th>Razão Social</th>
+					<th>Tipo</th>
+					<th>CNPJ</th>
+					<th>Estado</th>
+					<th>Município</th>
+					<th>CEP</th>
+					<th>Ações</th>
 				</tr>
 				{% for row in empresa %}
 				<tr>
@@ -36,7 +36,7 @@
 					<td>{{ row[5] }}</td>				
 					<td>{{ row[6] }}</td>				
 					<td>{{ row[7] }}</td>
-					<td><a href="/remove/{{ row[0] }}"> Excluir </a></td>
+					<td class="fig"><a href="/updated/{{ row[0] }}"><img src="../static/images/lapis.svg"></a><a href="/remove/{{ row[0] }}"><img src="../static/images/fechar.svg"></a></td>
 				</tr>
 				{% endfor %}
 
