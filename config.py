@@ -39,11 +39,10 @@ def registered() -> 'str':
         cursor = database.cursor()
 
         _SQL = """INSERT INTO empresa
-                  (razao_social, tipo, cnpj, estado, municipio, cep)
+                  (razao_social, cnpj, estado, municipio, cep)
                   VALUES
-                  (%s, %s, %s, %s, %s, %s)"""
+                  (%s, %s, %s, %s, %s)"""
         cursor.execute(_SQL, (request.form['razao_social'],
-                              request.form['tipo'],
                               request.form['cnpj'],
                               request.form['estado'],
                               request.form['municipio'],
@@ -100,7 +99,8 @@ def delete(id):
 # Decorador route, para o caminho web ('/updated/índice_do_id_empresa'), assim que é para atualizar os dados da empresa cadastrada
 @app.route('/updated/<int:id>', methods=['GET', 'POST'])
 
-# Função ('update'), Temos duas condições, a primeira para o 'GET', onde vamos capturar todos os dados da empresa no índice qualquer, segunda condição para o 'POST', onde vamos inserir novos dados
+# Função ('update'), Temos duas condições, a primeira para o 'GET', onde vamos capturar todos os dados da empresa no índice qualquer,
+# segunda condição para o 'POST', onde vamos inserir novos dados
 def update(id):
     if request.method == 'GET':
         database = mysql.connector.connect(**db.DBconfig())
@@ -124,10 +124,9 @@ def update(id):
         database = mysql.connector.connect(**db.DBconfig())
         cursor = database.cursor()
 
-        _SQL = """UPDATE empresa SET razao_social = %s, tipo = %s, cnpj = %s, estado = %s, municipio = %s, cep = %s WHERE id = %s"""
+        _SQL = """UPDATE empresa SET razao_social = %s, cnpj = %s, estado = %s, municipio = %s, cep = %s WHERE id = %s"""
 
         cursor.execute(_SQL, (request.form.get('razao_social'),
-                              request.form.get('tipo'),
                               request.form.get('cnpj'),
                               request.form.get('estado'),
                               request.form.get('municipio'),
@@ -140,6 +139,50 @@ def update(id):
         database.close()
 
         return redirect(url_for('view'))
+
+# Decorador route, para o caminho web ('/register_branch/índice_do_id_empresa'), cadastrar uma unidade (Filial) à destinada empresa (Matriz)
+@app.route('/register_branch/<int:id>', methods=['GET', 'POST'])
+
+# Função ('registerbranch'), Possuí duas condições, na primeira o 'GET', sempre iremos capturar os dados da empresa de qualquer índice,
+# já na segunda condição o 'POST', vamos registrar os dados da unidade (FiliaL) ao Banco de dados.
+def registerbranch(id):
+    if request.method == 'GET':
+        database = mysql.connector.connect(**db.DBconfig())
+        cursor = database.cursor()
+
+        _SQL = """SELECT * FROM empresa WHERE id = %s"""
+
+        cursor.execute(_SQL, (id,))
+
+        empresa = cursor.fetchall()
+
+        cursor.close()
+        database.close()
+
+        return render_template('register_branch.html',
+                               the_title='MyBusiness - Register Branch',
+                               the_heading='Formulário de Cadastro de Filiais',
+                               empresa=empresa)
+
+    elif request.method == 'POST':
+        database = mysql.connector.connect(**db.DBconfig())
+        cursor = database.cursor()
+
+        _SQL = """INSERT INTO unidade
+                  (id_empresa, razao_social, cnpj, estado, municipio, cep)
+                  VALUES
+                  (%s, %s, %s, %s, %s, %s)"""
+        cursor.execute(_SQL, (id,
+                              request.form['razao_social'],
+                              request.form['cnpj'],
+                              request.form['estado'],
+                              request.form['municipio'],
+                              request.form['cep'],))
+        database.commit()
+        cursor.close()
+        database.close()
+
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)
