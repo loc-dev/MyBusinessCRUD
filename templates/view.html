@@ -20,7 +20,7 @@
 				<tr>
 					<th>Cadastrado em</th>
 					<th>Razão Social</th>
-					<th>Tipo</th>
+					<!-- <th>Tipo</th> -->
 					<th>CNPJ</th>
 					<th>Estado</th>
 					<th>Município</th>
@@ -31,12 +31,16 @@
 				<tr>
 					<td>{{ row[1] }}</td>				
 					<td>{{ row[2] }}</td>				
-					<td>{{ row[3] }}</td>				
+					<td>{{ row[3] }}</td>			
 					<td>{{ row[4] }}</td>				
 					<td>{{ row[5] }}</td>				
 					<td>{{ row[6] }}</td>				
-					<td>{{ row[7] }}</td>
-					<td class="fig"><a href="/updated/{{ row[0] }}"><img src="../static/images/lapis.svg"></a><a href="/remove/{{ row[0] }}"><img src="../static/images/fechar.svg"></a></td>
+					<!-- <td>{{ row[7] }}</td> -->
+					<td class="fig">
+						<a href="/updated/{{ row[0] }}"><img src="../static/images/lapis.svg"></a>
+						<a href="/remove/{{ row[0] }}"><img src="../static/images/fechar.svg"></a>
+						<a href="/register_branch/{{ row[0] }}"><img src="../static/images/share.svg"></a>
+					</td>
 				</tr>
 				{% endfor %}
 
