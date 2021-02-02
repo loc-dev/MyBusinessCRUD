@@ -15,6 +15,8 @@
 
 		<section>
 
+			<p>ATENÇÃO: Essa página você acompanha a relação das Empresas tipo (MATRIZ) cadastradas</p>
+
 			<table id="view">
 
 				<tr>
@@ -37,9 +39,10 @@
 					<td>{{ row[6] }}</td>				
 					<!-- <td>{{ row[7] }}</td> -->
 					<td class="fig">
-						<a href="/updated/{{ row[0] }}"><img src="../static/images/lapis.svg"></a>
-						<a href="/remove/{{ row[0] }}"><img src="../static/images/fechar.svg"></a>
-						<a href="/register_branch/{{ row[0] }}"><img src="../static/images/share.svg"></a>
+						<a href="/updated/{{ row[0] }}"><img src="../static/images/lapis.svg" title="Editar os dados desta Matriz"></a>
+						<a href="/remove/{{ row[0] }}"><img src="../static/images/fechar.svg" title="Excluir à Matriz"></a>
+						<a href="/register_branch/{{ row[0] }}"><img src="../static/images/share.svg" title="Cadastrar Filiais"></a>
+						<a href="/view_branches/{{ row[0] }}"><img src="../static/images/search.svg" title="Visualizar Relação das Filiais Cadastradas"></a>
 					</td>
 				</tr>
 				{% endfor %}
