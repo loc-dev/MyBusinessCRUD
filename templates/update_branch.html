@@ -1,0 +1,71 @@
+{% extends 'index.html' %}
+
+{% block body %}
+
+	<header>
+
+		<img class="logo" src="../static/images/buildings_icon.svg" alt="Logo do Sistema MyBusiness">
+		<h1>MyBusiness - CRUD</h1>			
+				
+	</header>
+
+	<main>
+
+		<h2>{{ the_heading }}</h2>
+
+		<section>
+
+			<form method='POST' action="">
+
+				<table>
+
+					<p>Neste formulário contém os seguintes dados da empresa selecionada</p>
+					<p>Deseja alterar algum campo de texto, fique à vontade!</p>
+					{% for row in unidade %}
+					<tr>
+						<td>Razão Social</td>
+						<td><input type='TEXT' name='razao_social' placeholder='Razão Social' value="{{ row[2] }}"></td>
+					</tr>
+
+					<tr>
+						<td>CNPJ:</td>
+						<td><input type='TEXT' name='cnpj' placeholder='CNPJ' value="{{ row[3] }}"></td>
+					</tr>
+
+					<tr>
+						<td>Estado:</td>
+						<td><input type='TEXT' name='estado' placeholder='Estado' value="{{ row[4] }}"></td>
+					</tr>
+
+					<tr>
+						<td>Município:</td>
+						<td><input type='TEXT' name='municipio' placeholder='Município' value="{{ row[5] }}"></td>
+					</tr>
+
+					<tr>
+						<td>CEP:</td>
+						<td><input type='TEXT' name='cep' placeholder="CEP" value="{{ row[6] }}"></td>
+					</tr>
+					{% endfor %}
+
+				</table>
+
+				<p>Clique no botão abaixo, para atualizar!</p>
+
+				<p><input class="reg" type='SUBMIT' value='Atualizar os dados'></p>
+
+			</form>
+
+		</section>
+		{% for row in unidade %}
+		<button class="back-index" type="button"><a href="{{ url_for('branch', id=row[7])}}">Voltar para Relação das Unidades</a></button>
+		{% endfor %}
+
+
+	</main>
+
+	<footer>
+		Copyright @ 2021 - Leonardo Oliveira de Carvalho
+	</footer>
+
+{% endblock %}
