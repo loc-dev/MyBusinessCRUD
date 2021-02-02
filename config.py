@@ -15,7 +15,7 @@ app = Flask(__name__)
 @app.route('/index')
 
 # Função ('index'), quando chamada retornará o HTML para o servidor web
-def index() -> 'html':
+def index():
     return render_template('index.html',
                            the_title='MyBusiness - Painel',
                            the_heading='Painel Administrativo')
@@ -24,7 +24,7 @@ def index() -> 'html':
 @app.route('/register')
 
 # Função ('register'), quando chamada retornará a página de formulário de cadastro para empresas
-def register() -> 'html':
+def register():
     return render_template('register.html',
                            the_title='MyBusiness - Register',
                            the_heading='Formulário de Cadastro')
@@ -57,7 +57,7 @@ def registered() -> 'str':
 @app.route('/view', methods=['GET'])
 
 # Função ('view'), também temos uma condição, caso o método seja GET, vamos ativar nosso cursor() e dar execute() na consulta SQL que precisamos.
-def view() -> 'html':
+def view():
     if request.method == "GET":
         database = mysql.connector.connect(**db.DBconfig())
         cursor = database.cursor()
@@ -188,7 +188,7 @@ def registerbranch(id):
 @app.route('/view_branches/<int:id>', methods=['GET'])
 
 # Função ('branch'), servirá para consultar nosso Banco de Dados as unidades cadastradas na seguinte tabela unidade, com a cláusula da coluna id_empresa (FK)
-def branch(id) -> 'html':
+def branch(id):
     if request.method == "GET":
         database = mysql.connector.connect(**db.DBconfig())
         cursor = database.cursor()
@@ -228,6 +228,48 @@ def deletebranch(id):
 
     return redirect(url_for('view', unidade=unidade))
 
+# Decorador route, para o caminho web ('/updated/índice_do_id_empresa'), assim que é para atualizar os dados da filiais cadastradas em determinada empresa (Matriz)
+@app.route('/updated_branch/<int:id>', methods=['GET', 'POST'])
+
+# Função ('update'), Temos duas condições, a primeira para o 'GET', onde vamos capturar todos os dados da filial independente do índice,
+# segunda condição para o 'POST', onde vamos ajustar os dados preenchidos automaticamente, caso, esteja com erro, e assim, encaminhar o dado correto.
+def updatebranch(id):
+    if request.method == 'GET':
+        database = mysql.connector.connect(**db.DBconfig())
+        cursor = database.cursor()
+
+        _SQL = """SELECT * FROM unidade WHERE id = %s"""
+
+        cursor.execute(_SQL, (id,))
+
+        unidade = cursor.fetchall()
+
+        cursor.close()
+        database.close()
+
+        return render_template('update_branch.html',
+                               the_title='MyBusiness - Update data Companies',
+                               the_heading='Atualizar Filial',
+                               unidade=unidade)
+
+    elif request.method == 'POST':
+        database = mysql.connector.connect(**db.DBconfig())
+        cursor = database.cursor()
+
+        _SQL = """UPDATE unidade SET razao_social = %s, cnpj = %s, estado = %s, municipio = %s, cep = %s WHERE id = %s"""
+
+        cursor.execute(_SQL, (request.form.get('razao_social'),
+                              request.form.get('cnpj'),
+                              request.form.get('estado'),
+                              request.form.get('municipio'),
+                              request.form.get('cep'),
+                              id,))
+
+        database.commit()
+        cursor.close()
+        database.close()
+
+        return redirect(url_for('view'))
 
 if __name__ == '__main__':
     app.run(debug=True)
