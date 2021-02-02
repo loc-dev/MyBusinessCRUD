@@ -184,5 +184,28 @@ def registerbranch(id):
 
     return redirect(url_for('index'))
 
+# Decorador route, para caminho web ('/view_branches/índice_do_id_empresa'), se trata para visualizar uma relação das unidades cadastradas
+@app.route('/view_branches/<int:id>', methods=['GET'])
+
+# Função ('branch'), servirá para consultar nosso Banco de Dados as unidades cadastradas na seguinte tabela unidade, com a cláusula da coluna id_empresa (FK)
+def branch(id) -> 'html':
+    if request.method == "GET":
+        database = mysql.connector.connect(**db.DBconfig())
+        cursor = database.cursor()
+
+        _SQL = """SELECT * FROM unidade WHERE id_empresa = %s"""
+
+        cursor.execute(_SQL, (id,))
+
+        unidade = cursor.fetchall()
+
+        cursor.close()
+        database.close()
+
+        return render_template('view_branches.html',
+                        the_title='MyBusiness - View Branches Companies',
+                        the_heading="Relação das Unidades Cadastradas",
+                        unidade=unidade)
+
 if __name__ == '__main__':
     app.run(debug=True)
