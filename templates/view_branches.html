@@ -1,0 +1,66 @@
+{% extends 'index.html' %}
+
+{% block body %}
+
+	<header>
+
+		<img class="logo" src="../static/images/buildings_icon.svg" alt="Logo do Sistema MyBusiness">
+		<h1>MyBusiness - CRUD</h1>			
+				
+	</header>
+
+	<main>
+
+		<h2>{{ the_heading }}</h2>
+
+		<section>
+
+			<p>ATENÇÃO: Essa página você acompanha a relação das Unidades, ou seja, as filiais cadastradas determinada empresa selecionada.</p>
+			{% if unidade %}
+				{% for row in unidade %}
+				<p>Neste caso à Empresa (Matriz) selecionada foi: <b>{{ row[2] }}</b></p>
+				{% endfor %}
+			{% else %}
+				<p><b>Não há filiais cadastradas</b></p>
+				<p>É necessário realizar um cadastro da filial, retorne na página anterior, clicando no botão abaixo. Logo, selecione o ícone (Cadastrar Filiais).</p>
+			{% endif %}
+
+			<table id="view">
+
+				<tr>
+					<th>Cadastrado em</th>
+					<th>Razão Social</th>
+					<th>CNPJ</th>
+					<th>Estado</th>
+					<th>Município</th>
+					<th>CEP</th>
+					<th>Ações</th>
+				</tr>
+				{% for row in unidade %}
+				<tr>
+					<td>{{ row[1] }}</td>				
+					<td>{{ row[2] }}</td>				
+					<td>{{ row[3] }}</td>			
+					<td>{{ row[4] }}</td>				
+					<td>{{ row[5] }}</td>				
+					<td>{{ row[6] }}</td>
+					<td class="fig">
+						<a href="/updated/{{ row[0] }}"><img src="../static/images/lapis.svg" title="Editar os dados desta filial"></a>
+						<a href="/remove/{{ row[0] }}"><img src="../static/images/fechar.svg" title="Excluir à filial"></a>
+					</td>
+				</tr>
+				{% endfor %}
+
+			</table>
+
+		</section>
+
+		<button class="back-index" type="button"><a href="{{ url_for('view')}}">Voltar para Relação de Empresas</a></button>
+
+	</main>
+
+	<footer>
+		Copyright @ 2021 - Leonardo Oliveira de Carvalho
+	</footer>
+
+{% endblock %}
