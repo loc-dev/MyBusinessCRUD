@@ -182,7 +182,7 @@ def registerbranch(id):
         cursor.close()
         database.close()
 
-    return redirect(url_for('index'))
+        return redirect(url_for('index'))
 
 # Decorador route, para caminho web ('/view_branches/índice_do_id_empresa'), se trata para visualizar uma relação das unidades cadastradas
 @app.route('/view_branches/<int:id>', methods=['GET'])
@@ -203,9 +203,31 @@ def branch(id) -> 'html':
         database.close()
 
         return render_template('view_branches.html',
-                        the_title='MyBusiness - View Branches Companies',
-                        the_heading="Relação das Unidades Cadastradas",
-                        unidade=unidade)
+                               the_title='MyBusiness - View Branches Companies',
+                               the_heading="Relação das Unidades Cadastradas",
+                               unidade=unidade)
+
+# Decorador route, para o caminho web ('/remove/índice_do_id_filial'), assim que é para remover a unidade cadastrada
+@app.route('/remove_branch/<int:id>')
+
+# Função ('delete'), Ao fazer a conexão com o banco de dados, vamos fazer a consulta de exclusão c/ a cláusula WHERE
+def deletebranch(id):
+    database = mysql.connector.connect(**db.DBconfig())
+    cursor = database.cursor()
+
+    _SQL = """DELETE FROM unidade
+              WHERE id = %s"""
+
+    cursor.execute(_SQL, (id,))
+
+    unidade = cursor.fetchall()
+
+    database.commit()
+    cursor.close()
+    database.close()
+
+    return redirect(url_for('view', unidade=unidade))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
